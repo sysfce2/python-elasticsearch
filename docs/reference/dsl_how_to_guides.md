@@ -110,7 +110,7 @@ response = await s.execute()
 
 ::::
 
-If you just want to iterate over the hits returned by your search you can iterate over the `Search` or `AsyncSearch` objects:
+If you want to iterate over the hits returned by your search you can iterate over the `Search` or `AsyncSearch` objects:
 
 ::::{tab-set}
 :group: sync_or_async
@@ -685,7 +685,7 @@ s = AsyncSearch().sort(
 
 It accepts positional arguments which can be either strings or dictionaries. String value is a field name, optionally prefixed by the `-` sign to specify a descending order.
 
-To reset the sorting, just call the method with no arguments:
+To reset the sorting, call the method with no arguments:
 
 ```python
 s = s.sort()
@@ -733,7 +733,7 @@ async for hit in s.scan():
 
 ::::
 
-Note that in this case the results won’t be sorted.
+In this case, the results won’t be sorted.
 
 
 #### Highlighting [_highlighting]
@@ -880,7 +880,7 @@ async def example():
 
 #### Extra properties and parameters [_extra_properties_and_parameters]
 
-To set extra properties of the search request, use the `.extra()` method. This can be used to define keys in the body that cannot be defined via a specific API method like `explain` or `search_after`:
+To set extra properties of the search request, use the `.extra()` method. This can be used to define keys in the body that cannot be defined using a specific API method like `explain` or `search_after`:
 
 ```python
 s = s.extra(explain=True)
@@ -956,7 +956,7 @@ s.update_from_dict({"query": {"match": {"title": "python"}}, "size": 42})
 
 ### Response [_response]
 
-You can execute your search by calling the `.execute()` method that will return a `Response` object. The `Response` object allows you access to any key from the response dictionary via attribute access. It also provides some convenient helpers:
+You can execute your search by calling the `.execute()` method that will return a `Response` object. The `Response` object allows you access to any key from the response dictionary using attribute access. It also provides some convenient helpers:
 
 ::::{tab-set}
 :group: sync_or_async
@@ -1003,11 +1003,11 @@ print(response.suggest.my_suggestions)
 
 ::::
 
-If you want to inspect the contents of the `response` objects, just use its `to_dict` method to get access to the raw data for pretty printing.
+If you want to inspect the contents of the `response` objects, use its `to_dict` method to get access to the raw data for pretty printing.
 
 #### Hits [_hits]
 
-To access the hits returned by the search, use the `hits` property or just iterate over the `Response` object:
+To access the hits returned by the search, use the `hits` property or iterate over the `Response` object:
 
 ::::{tab-set}
 :group: sync_or_async
@@ -1035,7 +1035,7 @@ for h in response:
 ::::
 
 ::::{note}
-If you are only seeing partial results (e.g. 10000 or even 10 results), consider using the option `s.extra(track_total_hits=True)` to get a full hit count.
+If you are only seeing partial results (for example 10000 or even 10 results), consider using the option `s.extra(track_total_hits=True)` to get a full hit count.
 
 ::::
 
@@ -1043,7 +1043,7 @@ If you are only seeing partial results (e.g. 10000 or even 10 results), consider
 
 #### Result [_result]
 
-The individual hits is wrapped in a convenience class that allows attribute access to the keys in the returned dictionary. All the metadata for the results are accessible via `meta` (without the leading `_`):
+The individual hits is wrapped in a convenience class that allows attribute access to the keys in the returned dictionary. All the metadata for the results are accessible using `meta` (without the leading `_`):
 
 ::::{tab-set}
 :group: sync_or_async
@@ -1601,7 +1601,7 @@ doc = MyDocument()
 
 ::::
 
-Note that the `M` type hint does not provide any runtime behavior and its use is not required, but it can be useful to eliminate spurious type errors in IDEs or type checking builds.
+The `M` type hint does not provide any runtime behavior and its use is not required, but it can be useful to remove spurious type errors in IDEs or type checking builds.
 
 The `InstrumentedField` objects returned when fields are accessed as class attributes are proxies for the field instances that can be used anywhere a field needs to be referenced, such as when specifying sort options in a `Search` object:
 
@@ -1699,7 +1699,7 @@ async def example():
 
 This code will typically be run in the setup for your application during a code deploy, similar to running database migrations.
 
-To create a new `Post` document just instantiate the class and pass in any fields you wish to set, you can then use standard attribute setting to change/add more fields. Note that you are not limited to the fields defined explicitly:
+To create a new `Post` document, instantiate the class and pass in any fields you wish to set, you can then use standard attribute setting to change/add more fields. You are not limited to the fields defined explicitly:
 
 ::::{tab-set}
 :group: sync_or_async
@@ -1739,7 +1739,7 @@ async def example():
 
 ::::
 
-All the metadata fields (`id`, `routing`, `index`, etc.) can be accessed (and set) via a `meta` attribute or directly using the underscored variant:
+All the metadata fields (`id`, `routing`, `index` and so on) can be accessed (and set) using a `meta` attribute or directly using the underscored variant:
 
 ```python
 post = Post(meta={'id': 42})
@@ -1905,7 +1905,7 @@ posts = await Post.mget([42, 47, 256])
 
 The index associated with the `Document` is accessible via the `_index` class property which gives you access to the `index` class.
 
-The `_index` attribute is also home to the `load_mappings` method which will update the mapping on the `Index` from elasticsearch. This is very useful if you use dynamic mappings and want the class to be aware of those fields (for example if you wish the `Date` fields to be properly (de)serialized):
+The `_index` attribute is also home to the `load_mappings` method which will update the mapping on the `Index` from elasticsearch. This is useful if you use dynamic mappings and want the class to be aware of those fields (for example if you wish the `Date` fields to be properly (de)serialized):
 
 ::::{tab-set}
 :group: sync_or_async
@@ -1926,7 +1926,7 @@ await Post._index.load_mappings()
 
 ::::
 
-To delete a document just call its `delete` method:
+To delete a document, call its `delete` method:
 
 ::::{tab-set}
 :group: sync_or_async
@@ -2071,7 +2071,7 @@ class Person(AsyncBaseESModel):
 
 ::::
 
-Note that inner classes do not need to be defined with a custom base class; these should be standard Pydantic model 
+Inner classes do not need to be defined with a custom base class; these should be standard Pydantic model 
 classes. The attributes defined in these classes can include Elasticsearch annotations, as long as they are given
 in an `Annotated` type hint.
 
@@ -2141,7 +2141,7 @@ async def example():
 
 #### Analysis [_analysis]
 
-To specify `analyzer` values for `Text` fields you can just use the name of the analyzer (as a string) and either rely on the analyzer being defined (like built-in analyzers) or define the analyzer yourself manually.
+To specify `analyzer` values for `Text` fields you can use the name of the analyzer (as a string) and either rely on the analyzer being defined (like built-in analyzers) or define the analyzer yourself manually.
 
 Alternatively, you can create your own analyzer and have the persistence layer handle its creation, from our example earlier:
 
@@ -2232,7 +2232,7 @@ async def example():
 
 ::::
 
-Alternatively you can just take a `Search` or `AsyncSearch` object and restrict it to return our document type, wrapped in correct class:
+Alternatively you can take a `Search` or `AsyncSearch` object and restrict it to return our document type, wrapped in correct class:
 
 ::::{tab-set}
 :group: sync_or_async
@@ -2255,9 +2255,9 @@ s = s.doc_type(Post)
 
 ::::
 
-You can also combine document classes with standard doc types (just strings), which will be treated as before. You can also pass in multiple `Document` subclasses and each document in the response will be wrapped in it’s class.
+You can also combine document classes with standard doc types (strings), which will be treated as before. You can also pass in multiple `Document` subclasses and each document in the response will be wrapped in it’s class.
 
-If you want to run suggestions, just use the `suggest` method on the `Search` object:
+If you want to run suggestions, use the `suggest` method on the `Search` object:
 
 ::::{tab-set}
 :group: sync_or_async
@@ -2301,7 +2301,7 @@ In the `Meta` class inside your document definition you can define various metad
 
 * `mapping`: optional instance of `Mapping` or `AsyncMapping` classes to use as base for the mappings created from the fields on the document class itself.
 
-Any attributes on the `Meta` class that are instance of `MetaField` will be used to control the mapping of the meta fields (`_all`, `dynamic` etc). Just name the parameter (without the leading underscore) as the field you wish to map and pass any parameters to the `MetaField` class:
+Any attributes on the `Meta` class that are instance of `MetaField` will be used to control the mapping of the meta fields (`_all`, `dynamic` and so on). Name the parameter (without the leading underscore) as the field you wish to map and pass any parameters to the `MetaField` class:
 
 ::::{tab-set}
 :group: sync_or_async
@@ -2400,7 +2400,7 @@ class BlogPost(BaseDocument):
 
 ::::
 
-Another use case would be using the [join type](elasticsearch://reference/elasticsearch/mapping-reference/parent-join.md) to have multiple different entities in a single index. You can see an [example](https://github.com/elastic/elasticsearch-py/blob/master/examples/dsl/parent_child.py) of this approach. Note that in this case, if the subclasses don’t define their own Index classes, the mappings are merged and shared between all the subclasses.
+Another use case would be using the [join type](elasticsearch://reference/elasticsearch/mapping-reference/parent-join.md) to have multiple different entities in a single index. You can see an [example](https://github.com/elastic/elasticsearch-py/blob/master/examples/dsl/parent_child.py) of this approach. In this case, if the subclasses don’t define their own Index classes, the mappings are merged and shared between all the subclasses.
 
 
 
@@ -2547,7 +2547,7 @@ dev_blogs.setting(number_of_shards=1)
 
 #### IndexTemplate [index-template]
 
-The DSL module also exposes an option to manage [index templates](docs-content://manage-data/data-store/templates.md) in elasticsearch using the `ComposableIndexTemplate` and `IndexTemplate` classes, which have very similar API to `Index`.
+The DSL module also exposes an option to manage [index templates](docs-content://manage-data/data-store/templates.md) in elasticsearch using the `ComposableIndexTemplate` and `IndexTemplate` classes, which have a similar API to `Index`.
 
 ::::{note}
 Composable index templates should be always be preferred over the legacy index templates, since the latter are deprecated.
@@ -2633,7 +2633,7 @@ async def example():
 
 ## Faceted Search [faceted_search]
 
-The library comes with a simple abstraction aimed at helping you develop faceted navigation for your data.
+The library comes with a basic abstraction aimed at helping you develop faceted navigation for your data.
 
 ### Configuration [_configuration_2]
 
@@ -2652,9 +2652,9 @@ There are several different facets available:
 * `DateHistogramFacet`: split documents into time intervals, example: `DateHistogramFacet(field="published_date", calendar_interval="day")`
 * `HistogramFacet`: similar to `DateHistogramFacet` but for numerical values: `HistogramFacet(field="rating", interval=2)`
 * `RangeFacet`: allows you to define your own ranges for a numerical fields: `RangeFacet(field="comment_count", ranges=[("few", (None, 2)), ("lots", (2, None))])`
-* `NestedFacet`: is just a simple facet that wraps another to provide access to nested documents: `NestedFacet('variants', TermsFacet(field='variants.color'))`
+* `NestedFacet`: is a basic facet that wraps another to provide access to nested documents: `NestedFacet('variants', TermsFacet(field='variants.color'))`
 
-By default facet results will only calculate document count, if you wish for a different metric you can pass in any single value metric aggregation as the `metric` kwarg (`TermsFacet(field='tags', metric=A('max', field=timestamp))`). When specifying `metric` the results will be, by default, sorted in descending order by that metric. To change it to ascending specify `metric_sort="asc"` and to just sort by document count use `metric_sort=False`.
+By default facet results will only calculate document count, if you wish for a different metric you can pass in any single value metric aggregation as the `metric` kwarg (`TermsFacet(field='tags', metric=A('max', field=timestamp))`). When specifying `metric` the results will be, by default, sorted in descending order by that metric. To change it to ascending specify `metric_sort="asc"` and to sort by document count use `metric_sort=False`.
 
 
 #### Advanced [_advanced]
@@ -2932,7 +2932,7 @@ async def example():
 
 ::::
 
-If you want to inspect the contents of the `response` objects, just use its `to_dict` method to get access to the raw data for pretty printing.
+If you want to inspect the contents of the `response` objects, use its `to_dict` method to get access to the raw data for pretty printing.
 
 
 ## ES|QL Queries
